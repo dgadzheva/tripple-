@@ -1,0 +1,632 @@
+/********************************************
+ ** Variables
+ **/
+$color-primary: #40abe3;
+$color-primary-dark: #0173c3;
+
+$color-grey: #dfdfdf;
+$color-grey-light: #ebebeb;
+$color-grey-dark: #807b78;
+$color-grey-custom: #999491;
+
+$color-white: #fff;
+$color-black: #000;
+$color-red: #e82648;
+$color-red-dark: #8d3244;
+$color-yellow: #e5cc00;
+$color-yellow-dark: #bb971d;
+
+/********************************************
+ ** Functions
+ **/
+
+
+/********************************************
+ ** Mixins
+ **/
+
+ // Absolute center
+ @mixin absCenter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+ }
+
+ // MEDIA QUERY MANAGER  
+/*
+0 - 560:       Phones
+560 - 768:     Table portrait small
+768 - 991:     Table portrait big
+991 - 1199:    Tablet landscape
+[1199 - 1800]: Original version
+1800 +         Large desktop screens
+
+
+breakpoint arguments:
+- phone
+- tab-port-small
+- tab-port-big
+- tab-land
+- big-desktop
+
+1em = 16px
+*/
+
+@mixin respond($breakpoint) {
+    @if $breakpoint == phone {
+        @media only screen and (max-width: 35em) { @content };      
+    }
+    @if $breakpoint == tab-port-small {
+        @media only screen and (max-width: 48em) { @content };     
+    }
+    @if $breakpoint == tab-port-big {
+        @media only screen and (max-width: 61.9375em) { @content };    
+    }
+    @if $breakpoint == tab-land {
+        @media only screen and (max-width: 74.9375em) { @content };    
+    }
+    @if $breakpoint == big-desktop {
+        @media only screen and (min-width: 112.5em) { @content };    
+    }
+}
+
+/********************************************
+ ** Utilities
+ **/
+
+ // Clear floats
+.clearfix{zoom:1;}
+
+.clearfix:after{
+    content:'';
+    clear:both;
+    display:block;
+    height: 0;
+    visibility: hidden;
+}
+
+
+/********************************************
+ ** Basics
+ **/
+
+ * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
+}
+
+html {font-size: 62.5%; /*1rem = 10px*/ }
+
+body {
+    font-family: 'Lato', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    line-height: 1.7;
+}
+
+a {text-decoration: none;}
+
+ul {list-style: none;}
+
+// Typography
+.heading-primary {
+    color: $color-white;
+    font-size: 1.5rem;
+    font-weight: 400;
+    text-transform:capitalize;
+    font-variant:small-caps;
+}
+
+.heading-seconadary {
+    color: $color-grey-dark;
+    font-size: 2rem;
+    font-weight: 300;
+
+    &--white {color: $color-white;}
+}
+
+.heading-tertiary {
+    color: $color-grey-dark;
+    font-size: 1.6rem;
+    font-weight: 400;
+}
+
+/********************************************
+ ** Components
+ **/
+
+ // Dropdown
+ .dropdown {
+    position: relative;
+
+    @include respond(phone) {display: none;}
+
+    a:link,
+    a:visited {
+        color: $color-white;
+        font-size: 1.4rem;
+        margin-right: 1.5rem;
+    }
+
+    .arrow {
+        top: 1.3rem; 
+        right: 0;       
+    }
+}
+
+//Arrows
+.arrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    
+    &--down {
+        border-width: 5px 4px 0 4px;
+        border-color: $color-white transparent transparent transparent;
+    }
+
+    &--right {
+        border-width: 4px 0 4px 6.9px;
+        border-color: transparent transparent transparent $color-white;
+    }
+}
+
+// Buttons
+.btn {
+
+    &--logout:link,
+    &--logount:visited {
+        background-color: $color-primary-dark;
+        border: 1px solid #0c69ab;
+        color: $color-primary;
+        font-size: 1.2rem;
+        padding: .1rem 2rem;
+        margin-left: 9rem;
+    }
+
+    &--close:link,
+    &--close:visited {
+        position:absolute;
+        right: -1.5rem;   
+        
+        @include respond(tab-port-big) {right: 0;}
+    }
+
+    &--white {color: $color-white;}
+    &--grey {color: $color-grey-dark;}
+}
+
+.wrapper{
+    background-color: $color-white;
+    border-radius: 3px;
+    padding: 1rem 2rem;
+    height: 100%;
+
+    @include respond(tab-port-small) {padding: 2rem;}
+}
+
+/********************************************
+ ** Header
+ **/
+.header {
+    height: 32rem;
+    position: relative;
+    background: linear-gradient(to right, 
+    rgba($color-primary, .6),
+    rgba($color-primary-dark, 0.6)), 
+    url('/assets/img/hero.jpg'); 
+    background-size: cover;
+    background-position: center;
+
+    border-bottom: 1rem solid $color-white;
+}
+
+.nav {
+    background-color: $color-primary;
+    border-bottom: 3px solid $color-primary-dark;
+    box-shadow: 0 1.5rem 4rem rgba($color-primary-dark, 0.35);
+
+    display: flex;
+    justify-content: space-between;
+    padding: .75rem 5rem;
+
+    @include respond(tab-port-small) {padding: .75rem 3rem;}
+
+    &__left,
+    &__right { 
+        position: relative;
+        display: flex;
+        justify-content: space-between; 
+        align-items: center;
+    }
+
+    &__left {
+        h1 { margin-right: 1rem; }        
+    }
+}
+
+.icon-holder {
+    flex: 0 0 35%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    @include respond(phone) {display: none;}
+
+    .icon {
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50px;
+        background-color:$color-primary-dark;
+
+        &:not(:last-of-type) {margin-right: .5rem;}
+    }
+}
+
+.logo {
+    //fake img
+    width: 6rem;
+    height: 6rem;
+    background-color: $color-white;
+
+    position: absolute;
+    left: 12rem;
+    top: .1rem;
+
+    @include respond(phone) {left: 2rem;}
+}
+
+/********************************************
+ ** Main
+ **/
+
+ main {
+    background-color: $color-grey-light;
+}
+
+/********************************************
+ ** Section Customer data
+ **/
+ .section-customer-data {
+    max-width: 80rem;
+    height: 11.9rem;
+    margin: 0 auto;
+    transform: translateY(-27rem);
+    position: relative;
+
+    @include respond(tab-port-big) {
+        max-width: 97%;
+        margin: 1.5rem;
+    }
+
+    @include respond(tab-port-small) {
+        height: auto;
+        transform: translateY(-23rem);
+    }
+ }
+ 
+ .customer-data{
+    display: flex;
+    justify-content: space-between;
+
+    @include respond(tab-port-small) {flex-direction: column;}
+
+    &__left {
+        margin-right: 4rem;
+
+        @include respond(tab-port-big) {margin-right: 2.5rem;}
+
+        @include respond(tab-port-small) {margin: 0 0 2rem;}
+    }
+
+    &__address {
+       font-size: 1.5rem;
+       color: $color-grey-dark;
+
+       @include respond(tab-port-small) {margin-bottom: 1rem;}
+   }
+
+   &__contacts {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap; 
+        height: 5rem; 
+
+        @include respond(tab-port-small) {width: 50%;}
+
+        @include respond(tab-phone) {display: inline-block;}
+        
+        li {
+            font-size: 1.1rem;
+            color: $color-grey-dark;
+            line-height: 1.3;
+            margin-right: 4rem;
+
+            span:first-of-type {
+                display: inline-block;
+                width: 5.5rem;
+            }
+        }
+   }
+
+    &__right {
+        flex: 1;        
+        overflow-y: scroll;
+
+        @include respond(tab-port-small) {max-height: 11.4rem;}
+   }
+
+   &__table {
+    border-collapse: collapse;
+    font-size: 1.1rem;
+    width: 100%;
+    height: 12rem;
+    color: $color-primary;
+
+    tr {
+        line-height: 1.5;
+        
+        @include respond(tab-port-small) {font-size: 1.3rem;}
+
+        @include respond(phone) {font-size: 1.1rem;}
+
+        &:nth-child(odd) {
+            background-color: $color-grey-light;
+        }
+    }
+
+    td {
+
+        &:first-of-type {
+            font-weight: bold;
+            padding-left: 2rem;
+        }
+    
+        &:nth-child(2) { text-align: center;}
+    
+        &:last-of-type {
+            color: $color-grey-dark;
+            text-align: right;
+            padding-right: 2rem;
+        }
+    }
+
+   }
+}
+
+ /********************************************
+ ** Section Event data
+ **/
+ .section-event-data {
+    max-width: 110rem;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;  
+    transform: translateY(-24rem);
+
+    @include respond(tab-land) {max-width: 95rem; }
+
+    @include respond(tab-port-big) {
+        max-width: 97%;
+        margin: 1.5rem;
+    }
+
+    .wrapper {
+        padding: 1rem 5rem;
+
+        @include respond(tab-land) {padding: 1.5rem;}
+    }
+ }
+
+ .event-data {
+     height: 31.5rem;
+     overflow-y: scroll;
+
+    &__table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0 1px;
+
+        tr {
+            position: relative;
+            background-color: $color-grey-light;
+            text-align: center;
+            border-bottom: 3px solid $color-white;
+
+            @include respond(tab-port-small) {font-size: 1.3rem;}
+        }
+
+        .priority {
+            width: 4.5rem;
+            height: 4.5rem;
+
+            @include respond(tab-port-small) {width: 2.5rem;}
+    
+            &--danger {background-color: $color-red;}
+            &--warning {background-color: $color-yellow;}
+        }
+
+        .type {
+            width: 28rem;
+            text-align: left;
+            color: $color-grey-dark;
+            padding: 0 2rem;
+
+            @include respond(tab-port-small) {
+                width: 20rem;
+                padding: 0 .5rem;
+            }
+            
+            &--danger {color: $color-red;}
+            &--warning {color: $color-yellow;}
+        }
+
+        .status {
+            width: 22rem;
+            color: $color-white;
+            position: relative;
+            cursor: pointer;
+
+            &--closed {
+                background-color: $color-grey;
+                color: rgba($color-grey-dark, .5);
+                cursor: default;
+            }
+            &--processing {
+                background-color: $color-grey-dark;
+
+                &::after {background: $color-grey-custom;}
+
+                &.active,
+                &:hover {background-color: $color-grey-custom;}
+            }
+            &--danger {
+                background-color:$color-red-dark;
+
+                &::after {background: $color-red;}
+
+                &.active,
+                &:hover {background-color: $color-red;}
+            }
+            &--warning {
+                background-color:$color-yellow-dark;
+              
+                &::after {background: $color-yellow;}
+
+                &.active,
+                &:hover {background-color: $color-yellow;}
+            }
+
+            &::after {
+                content: "";
+                display: block;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 3px;               
+                z-index: 1;
+            }
+
+            .arrow {
+                top: 1.9rem; 
+                right: 1rem;;       
+            }
+        }
+
+        .data {
+            width: 7rem;
+
+            &__button{
+                width: 1.75rem;
+                height: 1.75rem;
+                border-radius: 50%;
+                background-color: $color-grey-dark;
+                border:1px solid $color-grey-dark;
+                color: $color-white;
+            }
+        }
+
+        .id,
+        .date,
+        .time {
+            width: 13rem;
+            background-color: $color-grey;
+            font-size: 1.1rem;
+            color: $color-grey-dark;
+
+            &:not(.time) {
+                border-right: 8px solid $color-grey-light;
+            }
+        }
+    }
+    
+ }
+
+ /********************************************
+ ** Section Event handling
+ **/
+
+ .section-event-handling {
+    max-width: 110rem;
+    width: 100%;
+    height: 10rem;
+    margin: 0 auto;  
+    transform: translateY(-24rem);
+
+    @include respond(tab-land) {max-width: 95rem;}
+
+    @include respond(tab-port-big) {
+        max-width: 97%;
+        margin: 1.5rem;
+    }
+
+    .wrapper {
+        padding: 1rem 5rem;
+
+        @include respond(tab-land) {padding: 1.5rem;}
+    }
+ }
+
+ .event-holder {display:flex;}
+
+ .event {
+     flex: 0 0 33%;
+     margin-right: 2rem;
+
+     @include respond(tab-port-big) {flex: 0 0 31%;}
+
+     & > * {
+         display: block;
+         padding: 0 1.5rem;
+         color: $color-white;
+         font-size: 1.4rem;         
+    }
+
+    &__name {
+        text-align: left;
+        
+        &--danger {background-color: $color-red;}
+    }
+
+    &__message {
+        text-align: right;
+
+        &--danger {background-color: $color-red-dark;}
+    }   
+ }
+
+ .event-actions {
+     display: flex;
+     flex: 1 0 63%;
+
+     & > * {
+         flex: 33.333%;
+         color: $color-white;
+         cursor: pointer;
+     }
+
+     .btn-action {
+         background-color: $color-grey;
+         border: 0;
+         margin-right: 1rem;
+
+         &:hover {background-color: $color-grey-custom;}
+
+         &--active {background-color: $color-grey-dark;}
+     }
+
+     .btn-done {
+        flex: 8%;
+        border: 0;
+
+        &--danger {
+            background-color: $color-red-dark;
+
+            &:hover {background-color: $color-red;}
+        }
+     }
+ }

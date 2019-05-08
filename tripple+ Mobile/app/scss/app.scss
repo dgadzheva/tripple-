@@ -1,0 +1,410 @@
+/********************************************
+ ** Variables
+ **/
+$color-white: #fff;
+$color-white-dark: #fbfbfb;
+$color-black: #000;
+$color-yellow: #ffc90a;
+$color-grey-light: #ebebeb;
+$color-grey-dark: #444;
+
+$font-color-light: #a3a3a3;
+$font-color-dark: #767;
+
+/********************************************
+ ** Functions
+ **/
+
+
+/********************************************
+ ** Mixins
+ **/
+
+// MEDIA QUERY MANAGER  
+/*
+0 - 560:       Phones
+560 - 768:     Table portrait small
+768 - 991:     Table portrait big
+991 - 1199:    Tablet landscape
+[1199 - 1800]: Original version
+1800 +         Large desktop screens
+
+
+breakpoint arguments:
+- phone
+- tab-port-small
+- tab-port-big
+- tab-land
+- big-desktop
+
+1em = 16px
+*/
+
+@mixin respond($breakpoint) {
+    @if $breakpoint == phone {
+        @media only screen and (max-width: 35em) { @content };      
+    }
+    @if $breakpoint == tab-port-small {
+        @media only screen and (max-width: 48em) { @content };     
+    }
+    @if $breakpoint == tab-port-big {
+        @media only screen and (max-width: 61.9375em) { @content };    
+    }
+    @if $breakpoint == tab-land {
+        @media only screen and (max-width: 74.9375em) { @content };    
+    }
+    @if $breakpoint == big-desktop {
+        @media only screen and (min-width: 112.5em) { @content };    
+    }
+}
+
+/********************************************
+ ** Utilities
+ **/
+.u-margin-bottom-normal {margin-bottom: 2rem;}
+.u-margin-bottom-big {margin-bottom: 4rem;}
+
+
+/********************************************
+ ** Basics
+ **/
+
+ * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
+}
+
+html {font-size: 62.5%; /*1rem = 10px*/ }
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    line-height: 1.7;
+    background-color: $color-grey-light;
+}
+
+a {text-decoration: none;}
+
+ul {list-style: none;}
+
+// Typography
+.heading-primary {
+}
+
+.heading-secondary {
+    color: #afafaf;
+    font-size: 3rem;
+    letter-spacing: 4.8px;
+    text-transform: uppercase;
+    margin-bottom: 3rem;
+
+    @include respond(tab-port-big) {font-size: 2.5rem;}
+    @include respond(tab-port-small) {font-size: 2rem;}
+}
+
+.heading-tertiary {
+    font-size: 3.5rem;
+    font-weight: 300;
+    margin-bottom: 4rem;
+
+    &--light {color: $font-color-light;}
+    &--dark {color: $font-color-dark;}
+
+    @include respond(tab-port-small) {margin-bottom: 2rem;}
+}
+
+/********************************************
+ ** Components
+ **/
+ 
+ .tab-container {
+    background-color: $color-white;
+
+    .tabs{
+        display: flex;
+
+        & li {
+            flex: 0 0 25%;
+            text-align: center;
+            background: none;
+            color: $font-color-light;
+            display: inline-block;
+            padding: 1.5rem;
+            cursor: pointer;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            &.current{
+                color: $color-grey-dark;
+                position: relative;
+
+                &::before {
+                    content: "";
+                    display: block;
+                    position: absolute;
+                    top: -5px;
+                    left: 0;
+                    width: 100%;
+                    height: 5px;
+                    background-color: $color-yellow;
+                }
+            }
+
+            img {
+                margin-bottom: 1rem;
+            }
+
+            span {
+                font-size: 2rem;
+                letter-spacing: 1.7px;
+
+                @include respond(phone) {display: none;}
+            }
+        }
+    }
+  
+    .tab-content{
+        display: none;
+        background: $color-white;
+        padding: 3rem 6rem;
+
+        min-height: 190rem; //fake height for empty tabs
+
+        &.current{display: block;}
+
+        @include respond(tab-port-small) {padding: 1rem 3rem;}
+    }
+ }
+
+ .tile {
+    padding: 2rem 3rem;
+    border-radius: 40px;
+    box-shadow: 0 0 4px 4px rgba(207, 207, 207, 0.5);  
+    background-color: $color-white-dark;
+
+    &--vertical {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        img {
+            width: 10rem;
+            height: 10rem;
+            margin-bottom: 2rem;
+
+            @include respond(tab-port-small) {
+                width: 8rem;
+                height: 8rem;
+            }
+        }
+
+        span {
+            font-size: 3.5rem;
+            letter-spacing: 2.4px;
+            color: $font-color-dark;
+
+            @include respond(tab-port-big) {font-size: 2.5rem;}
+        }
+    }
+
+    &--horizontal {
+        display: flex;
+        align-items: center;
+        border-radius: 20px;
+
+        img {
+            width: 13rem;
+            height: 13rem;
+            margin-right: 4rem;
+
+            @include respond(tab-port-small) {
+                width: 11rem;
+                height: 11rem;
+            }
+        
+        }
+    }
+
+    &__details {
+        // max-width: 70rem;
+        line-height: 1;
+        
+        span {
+            font-size: 3.7rem;
+            color: #8c8c8c;
+
+            @include respond(tab-port-big) {font-size: 3rem;}
+            @include respond(tab-port-small) {font-size: 2.3rem;}
+        }
+    }
+
+    &__heading {
+        font-size: 4.2rem;
+        color: #373737;
+
+        &:not(:only-child) {margin-bottom: 1rem;}
+
+        @include respond(tab-port-big) {font-size: 3.2rem;}
+        @include respond(tab-port-small) {font-size: 2.8rem;}
+    }
+ }
+
+
+/********************************************
+ ** Header
+ **/
+ .header {
+    padding: 1.5rem;
+    background-color: $color-white;
+    box-shadow: 0 .5rem 4rem rgba($color-black, 0.1);
+ }
+
+ .logo {
+     display: block;
+     margin: 0 auto;
+ }
+
+/********************************************
+ ** Section General info
+ **/
+ .general-info {
+     max-width: 103.8rem;
+     background-color: $color-white;
+     border-radius: 5px;
+     margin: 3rem auto;
+     padding: 2rem 3rem 4rem;
+     display: flex;
+     justify-content: space-between;
+
+     @include respond(tab-port-big) {max-width: 90rem;}
+     @include respond(tab-port-small) {
+         max-width: 60rem;
+         flex-direction: column;
+    }
+
+    & > div:first-of-type {
+        @include respond(tab-port-small) {margin-bottom: 2rem;}
+    }
+ }
+
+ .weather,
+ .status {
+     flex: 0 0 47%;
+
+     &__info {
+         display: flex;
+         align-items: center;
+
+         img {
+             margin-right: 3rem;
+
+             @include respond(tab-port-big) { 
+                 width: 6rem;
+                 margin-right: 2rem;
+            }
+        }
+    }
+
+    &__text {
+        font-weight: 300;
+        color: $color-grey-dark;
+        text-align: left;
+        font-size: 3.7rem;
+        line-height: 1;
+
+        @include respond(tab-port-big) {font-size: 3rem;}
+
+        &--big {
+            font-size: 8.5rem;
+
+            @include respond(tab-port-big) {font-size: 6.5rem;}
+        }
+    }
+}
+
+.img--big {
+    @include respond(tab-port-big) {width: 9rem !important;}
+}
+
+/********************************************
+ ** Section Tabs
+ **/
+.plans {
+    display: flex;
+
+    @include respond(phone) {flex-direction: column;}
+
+    .plan {
+        flex: 0 0 48%;        
+        text-align: center;
+
+        &:first-of-type {
+            margin-right: 4rem;
+
+            @include respond(tab-port-small) {margin-right: 2.5rem;}
+
+            @include respond(phone) {margin: 0 0 2.5rem;}
+        }
+
+        span:first-of-type {
+            font-size: 3rem;
+            letter-spacing: 4.8px;
+            text-transform: uppercase;
+            color: #cbcbcb;
+
+            @include respond(tab-port-small) {letter-spacing: 1.8px;}
+        }
+
+        hr {border: 1px solid #979797;}
+
+        span:last-of-type {
+            font-size: 5rem;
+            color: #b6b6b6;
+
+            @include respond(tab-port-big) {
+                font-size: 3.5rem; 
+                line-height: 1;
+                padding: 1rem 0;
+                display: block;
+            }
+        }
+    }
+}
+
+.watering-options {
+    display: flex;
+    flex-flow: wrap;
+    justify-content: space-between;
+    margin: -2rem;
+
+    @include respond(phone) {
+        flex-direction: column;
+        margin: -1.25rem;
+    }
+
+    .tile {
+        flex: 1 0 28%;
+        margin: 2rem;
+        position: relative;
+
+        @include respond(tab-port-big) {flex: 1 0 42%;}
+
+        @include respond(phone) {margin: 1.25rem;}
+
+        .btn--remove:link,
+        .btn--remove:visited {
+            display: none;
+            font-size: 2.4rem;
+            color: $font-color-dark;
+            position: absolute;
+            top: 1rem;
+            right: 3rem;
+        }
+
+        &:hover .btn--remove {display: block;}
+    }
+}
